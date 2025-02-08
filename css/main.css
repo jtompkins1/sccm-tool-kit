@@ -1,38 +1,122 @@
+:root {
+  --black: #02010aff;
+  --paynes-gray: #19647eff;
+  --platinum: #e0e1ddff;
+  --carmine: #931621ff;
+}
+
+h1, h2 {
+  font-family: 'Lucida Console', monospace;
+  font-weight: bold;
+}
+
+p {
+  font-family: Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+main {
+  background: var(--carmine);
+  color: var(--platinum);
+  padding: 10px;
+  flex: 1; 
+  box-sizing: border-box;
+}
+
+.heading {
+  background: var(--paynes-gray);
+  color: var(--platinum);
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+  margin: 0;
+  text-align: center;
+}
+
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  footer {
-    text-align: center;
-    padding: 16px;
-  }
-  
-  nav {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .counter-footer {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .counter-button {
-    width: 64px;
-    height: 32px;
-    font-size: 24px;
-  }
-  
-  .counter-label {
-    display: block;
-    font-size: 32px;
-    background: #f7f7f7;
-    width: 136px;
-    padding: 4px;
-    box-sizing: border-box;
-    margin-bottom: 8px;
-    text-align: center;
-  }
-/* test */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container for sidebar and main */
+.content-container {
+  display: flex;
+  flex: 1; 
+}
+
+.sidebar {
+  background: var(--black);
+  color: var(--platinum);
+  padding: 16px;
+  width: 150px;
+  min-height: 100vh;
+
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 80px;
+}
+
+.sidebar-nav a {
+  display: block;
+  color: var(--platinum);
+  text-decoration: none;
+  font-family: Verdana, sans-serif;
+  padding: 30px;
+}
+
+.sidebar a:hover {
+  color: var(--carmine);
+}
+
+.sidebar a.active {
+  color: var(--carmine);
+}
+
+footer {
+  background: var(--paynes-gray);
+  color: var(--platinum);
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+  font-family: Verdana, sans-serif;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.counter-footer {
+  display: flex;
+  gap: 8px;
+}
+
+.counter-button {
+  width: 64px;
+  height: 32px;
+  font-size: 24px;
+}
+
+.counter-label {
+  display: block;
+  font-size: 32px;
+  background: #f7f7f7;
+  width: 136px;
+  padding: 4px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  text-align: center;
+}

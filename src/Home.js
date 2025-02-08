@@ -1,7 +1,7 @@
 import { createElement } from './utils';
 
-function Page1() {
-  const title = createElement('h2', { textContent: 'Page 1' });
+function Home() {
+  const title = createElement('h2', { textContent: 'Welcome to the Tool Kit' });
 
   const page3Link = createElement('a', {
     href: '/#/page3',
@@ -11,4 +11,4 @@ function Page1() {
   return createElement('div', {}, [title, page3Link]);
 }
 
-export default Page1;
+export default Home;
