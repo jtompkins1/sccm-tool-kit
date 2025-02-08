@@ -63,13 +63,17 @@ header {
   padding: 16px;
   width: 150px;
   min-height: 100vh;
+  position: relative;
 
+}
+.sidebar-image {
+  width: 100%; 
+  height: auto; 
 }
 
 .sidebar-nav {
   list-style-type: none;
-  /* padding: 0; */
-  margin-top: 80px;
+
 }
 
 .sidebar-nav a {
@@ -78,16 +82,29 @@ header {
   color: var(--platinum);
   text-decoration: none;
   padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .sidebar a:hover {
-  background-color: var(--paynes-gray);
+  background-color: var(--black);
   width: 100%;
+  position: static;
+  padding: 35px; 
+  left: 0;
+  right: 0;
 }
 
-/* .sidebar a.active {
-  color: var(--carmine);
-} */
+.sidebar a.active {
+  background-color: var(--platinum);
+  color: var(--black);
+  width: 100%;
+  position: static;
+  padding: 35px; 
+  left: 0;
+  right: 0;
+}
 
 footer {
   background: var(--black);
