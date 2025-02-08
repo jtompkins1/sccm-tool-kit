@@ -5,7 +5,7 @@
   --carmine: #931621ff;
 }
 
-h1, h2 {
+h1, h2, a {
   font-family: 'Lucida Console', monospace;
   font-weight: bold;
 }
@@ -28,15 +28,16 @@ body {
 
 
 main {
-  background: var(--carmine);
-  color: var(--platinum);
+  background: var(--platinum);
+  color: var(--black);
   padding: 10px;
   flex: 1; 
   box-sizing: border-box;
 }
 
+
 .heading {
-  background: var(--paynes-gray);
+  background: var(--black);
   color: var(--platinum);
   width: 100%;
   justify-content: center;
@@ -58,8 +59,7 @@ header {
 }
 
 .sidebar {
-  background: var(--black);
-  color: var(--platinum);
+  background: var(--carmine);
   padding: 16px;
   width: 150px;
   min-height: 100vh;
@@ -68,28 +68,29 @@ header {
 
 .sidebar-nav {
   list-style-type: none;
-  padding: 0;
+  /* padding: 0; */
   margin-top: 80px;
 }
 
 .sidebar-nav a {
+  font-size: 20px;
   display: block;
   color: var(--platinum);
   text-decoration: none;
-  font-family: Verdana, sans-serif;
   padding: 30px;
 }
 
 .sidebar a:hover {
-  color: var(--carmine);
+  background-color: var(--paynes-gray);
+  width: 100%;
 }
 
-.sidebar a.active {
+/* .sidebar a.active {
   color: var(--carmine);
-}
+} */
 
 footer {
-  background: var(--paynes-gray);
+  background: var(--black);
   color: var(--platinum);
   width: 100%;
   justify-content: center;
