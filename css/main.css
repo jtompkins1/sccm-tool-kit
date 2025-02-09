@@ -114,13 +114,16 @@ header {
 .weather-container {
   display: flex;
   flex-direction: column;
+  padding: 8px;
   padding-top: 16px;
   background-color: var(--paynes-gray);
   border-radius: 10px;
   text-align: center;
   color: var(--platinum);
-  width: 100%;
+  width: 90%;
   box-sizing: border-box;
+  margin-top: 16px;
+  justify-self: center;
 }
 
 .weather-container h2 {
@@ -134,6 +137,39 @@ header {
   margin: 0;
   padding: 0;
 }
+
+.row2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between grid items */
+  padding: 16px; /* Adjust padding as needed */
+  margin-top: 16px;
+  width: 70%;
+  justify-self: center;
+}
+
+/* Modify holiday-container */
+.holiday-container {
+  background-color: var(--black);
+  border-radius: 10px;
+  padding: 8px;
+  padding-top: 16px;
+  text-align: center;
+  color: var(--platinum);
+  box-sizing: border-box;
+  margin-top: 16px;
+}
+
+/* Modify timeZoneContainer */
+.time-zone {
+  border-radius: 10px;
+  padding: 8px;
+  padding-top: 16px;
+  text-align: center;
+  color: var(--black);
+  box-sizing: border-box;
+}
+
 footer {
   background: var(--black);
   color: var(--platinum);

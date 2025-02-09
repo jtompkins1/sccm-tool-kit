@@ -46,3 +46,6 @@ export function displayWeatherResults(data) {
   document.getElementById('current-temp').innerHTML = `${Math.round(data.main.temp)}°F  and ${data.weather[0].main}`;
 
 };
+
+
+

@@ -2,6 +2,8 @@
 
 import { createElement } from './utils';
 import { apiFetch } from './utils';
+import { getHolidays, displayHolidays } from './Holiday';
+
 
 function Home() {
   // Weather Container
@@ -38,16 +40,47 @@ function Home() {
 
   document.addEventListener('DOMContentLoaded', apiFetch);
 
-  
+  // Row 2 Container
+  const row2Container = createElement('div', { className: 'row2-container' });
+  //holiday container
+  const holidayContainer = createElement('div', { className: 'holiday-container', id: 'holiday-container' });
 
-  // Combine all elements
-  return createElement('div', {}, [weatherContainer]);
+  row2Container.appendChild(holidayContainer);
+
+   // Function to display holidays
+   function displayHolidays(holidays) {
+    holidayContainer.innerHTML = ''; // Clear previous content
+    
+    // Add the title before listing holidays
+    holidayContainer.appendChild(createElement('h2', { textContent: 'US Holidays in 2025' }));
+    
+    holidays.forEach(holiday => {
+      const holidayItem = createElement('p', {
+        textContent: `${holiday.name} - ${holiday.dateString}`
+      });
+      holidayContainer.appendChild(holidayItem);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    apiFetch(); // Fetch weather data
+
+    const holidays = getHolidays();
+    displayHolidays(holidays);
+    console.log('Holiday container content:', holidayContainer.innerHTML);
+  });
+
+
+    //time zone container
+    const timeZoneContainer = createElement('div', { className: 'time-zone' });
+    row2Container.appendChild(timeZoneContainer);
+
+    timeZoneContainer.appendChild(createElement('h2', { textContent: 'Time in Nigeria' }));
+
+
+
+
+  return createElement('div', {}, [weatherContainer, row2Container]);
 }
-
-// Fetch weather data when Home component is loaded
-apiFetch();
-
-
-
 
 export default Home;
