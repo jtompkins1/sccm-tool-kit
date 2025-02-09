@@ -1,3 +1,5 @@
+//App.js
+
 import { createElement } from './utils';
 import { initRouter } from './router';
 import image from '../images/toolbox.png';

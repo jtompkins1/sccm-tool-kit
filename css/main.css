@@ -5,7 +5,7 @@
   --carmine: #931621ff;
 }
 
-h1, h2, a {
+h1, h2, h3, a {
   font-family: 'Lucida Console', monospace;
   font-weight: bold;
 }
@@ -61,7 +61,7 @@ header {
 .sidebar {
   background: var(--carmine);
   padding: 16px;
-  width: 150px;
+  width: 160px;
   min-height: 100vh;
   position: relative;
 
@@ -81,31 +81,59 @@ header {
   display: block;
   color: var(--platinum);
   text-decoration: none;
-  padding: 30px;
+  padding: 20px;
   width: 100%;
   box-sizing: border-box;
-  margin: 0;
+  margin: 10px 10px 10px 0;
+  text-align: center;
 }
 
 .sidebar a:hover {
   background-color: var(--black);
+  border-radius: 10px;
   width: 100%;
   position: static;
-  padding: 35px; 
+  padding: 20px; 
   left: 0;
   right: 0;
 }
 
 .sidebar a.active {
   background-color: var(--platinum);
+  border: 4px solid var(--black);
+  border-radius: 10px;
   color: var(--black);
   width: 100%;
   position: static;
-  padding: 35px; 
+  padding: 20px; 
   left: 0;
   right: 0;
 }
 
+/*weather*/
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  background-color: var(--paynes-gray);
+  border-radius: 10px;
+  text-align: center;
+  color: var(--platinum);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.weather-container h2 {
+  margin: 0;
+  padding: 0;
+}
+
+#todayWeather {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
 footer {
   background: var(--black);
   color: var(--platinum);
