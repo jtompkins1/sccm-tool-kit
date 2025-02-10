@@ -3,6 +3,7 @@
 import { createElement } from './utils';
 import { apiFetch } from './utils';
 import { getHolidays, displayHolidays } from './Holiday';
+//import { getOrCacheNigeriaTime } from './Nigeria';
 
 
 function Home() {
@@ -68,14 +69,25 @@ function Home() {
     const holidays = getHolidays();
     displayHolidays(holidays);
     console.log('Holiday container content:', holidayContainer.innerHTML);
+
+    //getOrCacheNigeriaTime();
   });
 
 
     //time zone container
-    const timeZoneContainer = createElement('div', { className: 'time-zone' });
-    row2Container.appendChild(timeZoneContainer);
+    // const timeZoneContainer = createElement('div', { className: 'time-zone' });
+    // const nigeriaTimeDisplay = createElement('div', { id: 'nigeriaTime' });
+    // const attribution = createElement('p', {
+    //   textContent: 'SCCM Tool Kit uses IP2Location.io <a href=https://www.ip2location.io>IP geolocation</a> web service.'
+    // });
 
-    timeZoneContainer.appendChild(createElement('h2', { textContent: 'Time in Nigeria' }));
+    // timeZoneContainer.appendChild(createElement('h2', { textContent: 'Time in Nigeria' }));
+    // timeZoneContainer.appendChild(nigeriaTimeDisplay);
+    // timeZoneContainer.appendChild(attribution);
+
+    // row2Container.appendChild(timeZoneContainer);
+
+
 
 
 
