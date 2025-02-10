@@ -19,33 +19,33 @@ export function createElement(type, props = {}, children = []) {
     return element;
   }
 
-const url = "https://api.openweathermap.org/data/2.5/weather?lat=36.32&lon=-94.10&units=imperial&appid=c7039a0ebd28f4b790d99a40ca9311c5";
+// const url = "https://api.openweathermap.org/data/2.5/weather?lat=36.32&lon=-94.10&units=imperial&appid=c7039a0ebd28f4b790d99a40ca9311c5";
 
 
-export async function apiFetch() {
-    try {
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);//for testing
-            displayWeatherResults(data);
+// export async function apiFetch() {
+//     try {
+//         const response = await fetch(url);
+//         if (response.ok) {
+//             const data = await response.json();
+//             console.log(data);//for testing
+//             displayWeatherResults(data);
 
-         } else {
-            throw Error(await response.text());
-         }
+//          } else {
+//             throw Error(await response.text());
+//          }
 
-    } catch (error) {
-        console.log(error);
-    }
+//     } catch (error) {
+//         console.log(error);
+//     }
 
-};
+// };
 
-apiFetch();
+// apiFetch();
 
-export function displayWeatherResults(data) {
-  document.getElementById('current-temp').innerHTML = `${Math.round(data.main.temp)}°F  and ${data.weather[0].main}`;
+// export function displayWeatherResults(data) {
+//   document.getElementById('current-temp').innerHTML = `${Math.round(data.main.temp)}°F  and ${data.weather[0].main}`;
 
-};
+// };
 
 
 

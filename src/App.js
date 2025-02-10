@@ -1,81 +1,61 @@
-//App.js
-
 import { createElement } from './utils';
-import { initRouter } from './router';
-import image from '../images/toolbox.png';
+import { getWeather, renderWeather } from './weather.js';
+import { mmToInches, renderConversion } from './unitConverter.js';
 
-function Header(mainDiv) {
-  const appTitle = createElement('h1', {
-    textContent: 'SCCM Tool Kit',
-    className: 'heading',
-  });
+function WeatherSection() {
+  const weatherSection = createElement('section', { id: 'weather' }, [
+    createElement('input', { type: 'text', id: 'cityInput', placeholder: 'Enter a city' }),
+    createElement('button', { id: 'getWeather', textContent: 'Get Weather' })
+  ]);
 
-  return createElement('header', {}, [appTitle]);
-}
-
-function Footer() {
-  const copyright = createElement('span', {
-    textContent: `Copyright © ${new Date().getFullYear()}   |    SCCM Tool Kit - For internal use only.`,
-  });
-
-  return createElement('footer', {}, [copyright]);
-}
-
-function updateActiveLink(currentRoute) {
-  const links = document.querySelectorAll('.sidebar-nav a');
-  links.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentRoute) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
+  // Add event listener only after the element has been created and added to the DOM
+  weatherSection.querySelector('#getWeather').addEventListener('click', async () => {
+    const city = document.getElementById('cityInput').value;
+    if (city) {
+      try {
+        const weatherData = await getWeather(city);
+        renderWeather(weatherData);
+      } catch (error) {
+        console.error('Weather fetch failed:', error);
+      }
     }
   });
+
+  return weatherSection;
+}
+
+function UnitConverterSection() {
+  const unitConverterSection = createElement('section', { id: 'unitConverter' }, [
+    createElement('input', { type: 'number', id: 'mmInput', placeholder: 'Enter mm' }),
+    createElement('button', { id: 'convertButton', textContent: 'Convert to Inches' }),
+    createElement('p', { id: 'result' })
+  ]);
+
+  // Add event listener only after the element has been created and added to the DOM
+  unitConverterSection.querySelector('#convertButton').addEventListener('click', async () => {
+    const mm = document.getElementById('mmInput').value;
+    if (mm && !isNaN(mm)) {
+      try {
+        const inches = await mmToInches(mm);
+        renderConversion(mm, inches);
+      } catch (error) {
+        document.getElementById('result').textContent = 'Error converting: ' + error.message;
+      }
+    } else {
+      document.getElementById('result').textContent = "Please enter a valid number for mm.";
+    }
+  });
+
+  return unitConverterSection;
 }
 
 function App() {
-  const main = createElement('main', {}, []);
-
-  // Add an image to the sidebar
-  const sidebarImage = createElement('img', {
-    src: image,
-    alt: 'Tool Box Icon', 
-    className: 'sidebar-image'
-  });
-
-  const sidebar = createElement('aside', {
-    className: 'sidebar'
-  }, [
-    sidebarImage,
-    createElement('nav', {
-      className: 'sidebar-nav'
-    }, [
-      createElement('a', {href: '#/home', textContent: 'Home'}),
-      createElement('a', {href: '#/page2', textContent: 'Page 2'}),
-      createElement('a', {href: '#/page3', textContent: 'Page 3'})
-    ])
+  const appContainer = createElement('main', { id: 'app' }, [
+    WeatherSection(),
+    UnitConverterSection()
   ]);
 
-  initRouter(main); // Initialize the router with the main element
-
-  // Update active link on initial load
-  const currentRoute = window.location.hash || '#/home';
-  updateActiveLink(currentRoute);
-
-  // Listen for route changes
-  window.addEventListener('hashchange', () => {
-    const newRoute = window.location.hash || '#/home';
-    updateActiveLink(newRoute);
-  });
-
-  // Create a container for sidebar and main content
-  const contentContainer = createElement('div', {
-    className: 'content-container'
-  }, [sidebar, main]);
-
-  return createElement('div', {
-    className: 'app-container'
-  }, [Header(main), contentContainer, Footer()]);
+  return appContainer;
 }
 
 export default App;
