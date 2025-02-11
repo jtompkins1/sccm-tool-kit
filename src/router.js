@@ -1,7 +1,7 @@
 import { createElement } from './utils';
 
 import Home from './Home';
-import Counter from './Counter';
+import Units from './Units';
 import Page3 from './Page3';
 
 import { checkAndFetchWeather } from './Home';  
@@ -20,7 +20,7 @@ export function initRouter(mainView) {
         break;
 
       case '#/page2':
-        updateView(Counter());
+        updateView(Units());
         break;
 
       case '#/page3':
