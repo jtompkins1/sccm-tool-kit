@@ -4,6 +4,8 @@ import Home from './Home';
 import Counter from './Counter';
 import Page3 from './Page3';
 
+import { checkAndFetchWeather } from './Home';  
+
 export function initRouter(mainView) {
   function updateView(newView) {
     mainView.innerHTML = '';
@@ -14,6 +16,7 @@ export function initRouter(mainView) {
     switch (hash) {
       case '#/home':
         updateView(Home());
+        checkAndFetchWeather();
         break;
 
       case '#/page2':

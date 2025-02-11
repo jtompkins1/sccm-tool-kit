@@ -1,5 +1,7 @@
 import { createElement, apiFetch } from './utils';
 
+let isHome = true;
+
 function Home() {
   // Weather Container
   const weatherContainer = createElement('div', { className: 'weather-container' });
@@ -80,7 +82,7 @@ function Home() {
         }
     }, 1000);
 
-    // Helper function to format time
+    //format time
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
@@ -97,12 +99,30 @@ function Home() {
     timerContainer
   ]);
 
-  // Fetch weather data when the DOM content is loaded
-  document.addEventListener('DOMContentLoaded', async () => {
+  const fetchWeather = async () => {
     await apiFetch(); 
+  };
+
+  document.addEventListener('DOMContentLoaded', fetchWeather);
+
+  window.addEventListener('popstate', () => {
+    if (window.location.hash === '#/home') { 
+      fetchWeather();
+    }
   });
+
 
   return container;
 }
+
+export const fetchWeather = async () => {
+  await apiFetch();
+};
+
+export const checkAndFetchWeather = () => {
+  if (window.location.pathname === '/home') {
+    fetchWeather();
+  }
+};
 
 export default Home;
