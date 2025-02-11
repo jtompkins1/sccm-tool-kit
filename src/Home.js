@@ -1,10 +1,4 @@
-//Home.js
-
-import { createElement } from './utils';
-import { apiFetch } from './utils';
-import { getHolidays, displayHolidays } from './Holiday';
-//import { getOrCacheNigeriaTime } from './Nigeria';
-
+import { createElement, apiFetch } from './utils';
 
 function Home() {
   // Weather Container
@@ -39,60 +33,76 @@ function Home() {
   weatherContainer.appendChild(dateTime);
   weatherContainer.appendChild(currentWeather);
 
-  document.addEventListener('DOMContentLoaded', apiFetch);
+  // Timer Container
+  const timerContainer = createElement('div', { className: 'timer-container' });
 
-  // Row 2 Container
-  const row2Container = createElement('div', { className: 'row2-container' });
-  //holiday container
-  const holidayContainer = createElement('div', { className: 'holiday-container', id: 'holiday-container' });
-
-  row2Container.appendChild(holidayContainer);
-
-   // Function to display holidays
-   function displayHolidays(holidays) {
-    holidayContainer.innerHTML = ''; // Clear previous content
-    
-    // Add the title before listing holidays
-    holidayContainer.appendChild(createElement('h2', { textContent: 'US Holidays in 2025' }));
-    
-    holidays.forEach(holiday => {
-      const holidayItem = createElement('p', {
-        textContent: `${holiday.name} - ${holiday.dateString}`
-      });
-      holidayContainer.appendChild(holidayItem);
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    apiFetch(); // Fetch weather data
-
-    const holidays = getHolidays();
-    displayHolidays(holidays);
-    console.log('Holiday container content:', holidayContainer.innerHTML);
-
-    //getOrCacheNigeriaTime();
+  // Create Timer Button
+  const timerButton = createElement('button', {
+    textContent: 'Create Timer',
+    id: 'createTimerButton'
   });
 
+  // Add click event listener to the button
+  timerButton.addEventListener('click', () => {
+    const timerName = prompt("Enter the name for your timer:");
+    const timerDuration = parseInt(prompt("Enter the duration in seconds:"));
 
-    //time zone container
-    // const timeZoneContainer = createElement('div', { className: 'time-zone' });
-    // const nigeriaTimeDisplay = createElement('div', { id: 'nigeriaTime' });
-    // const attribution = createElement('p', {
-    //   textContent: 'SCCM Tool Kit uses IP2Location.io <a href=https://www.ip2location.io>IP geolocation</a> web service.'
-    // });
+    if (!timerName || isNaN(timerDuration) || timerDuration <= 0) {
+        alert("Please enter valid inputs.");
+        return;
+    }
 
-    // timeZoneContainer.appendChild(createElement('h2', { textContent: 'Time in Nigeria' }));
-    // timeZoneContainer.appendChild(nigeriaTimeDisplay);
-    // timeZoneContainer.appendChild(attribution);
+    // Create timer elements
+    const timerTitle = createElement('h2', { textContent: timerName });
+    const progressBar = createElement('div', { id: `progressBar-${timerName}`, className: 'progress-bar' });
+    const timeLeftDisplay = createElement('span', { id: `timeLeft-${timerName}`, className: 'time-left' });
 
-    // row2Container.appendChild(timeZoneContainer);
+    // Append elements to timerContainer
+    timerContainer.appendChild(timerTitle);
+    timerContainer.appendChild(progressBar);
+    timerContainer.appendChild(timeLeftDisplay);
 
+    let timeLeft = timerDuration;
 
+    // Timer logic
+    progressBar.style.width = '0%';
+    timeLeftDisplay.textContent = formatTime(timeLeft);
 
+    const timer = setInterval(() => {
+        timeLeft--;
+        const percentComplete = ((timerDuration - timeLeft) / timerDuration) * 100;
+        progressBar.style.width = `${percentComplete}%`;
+        timeLeftDisplay.textContent = formatTime(timeLeft);
 
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert(`${timerName} timer finished!`);
+        }
+    }, 1000);
 
+    // Helper function to format time
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+  });
 
-  return createElement('div', {}, [weatherContainer, row2Container]);
+  // Append the button to the timer container
+  timerContainer.appendChild(timerButton);
+
+  // Main container with both weather and timer sections
+  const container = createElement('div', {}, [
+    weatherContainer,
+    timerContainer
+  ]);
+
+  // Fetch weather data when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', async () => {
+    await apiFetch(); 
+  });
+
+  return container;
 }
 
 export default Home;
