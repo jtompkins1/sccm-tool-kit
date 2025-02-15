@@ -56,8 +56,10 @@ function Forecast() {
     }
   };
 
-
+  // Call fetchInitialForecast immediately when the component is created
   fetchInitialForecast();
+
+
 
   return container;
 }

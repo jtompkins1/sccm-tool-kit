@@ -35,11 +35,13 @@ export async function apiFetch(type = 'weather') {
           } else {
               displayWeatherResults(data);
           }
+          return data; // Still return data for further use if needed
       } else {
           throw new Error(await response.text());
       }
   } catch (error) {
-      console.log(error);
+      console.error('API Fetch Error:', error);
+      throw error; // Re-throw for the caller to handle
   }
 };
 

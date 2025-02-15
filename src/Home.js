@@ -4,6 +4,22 @@ import { createElement, apiFetch } from './utils';
 let isHome = true;
 
 function Home() {
+    //fetch the weather data and update each element
+    apiFetch().then(data => {
+      console.log('Fetched data:', data);
+      if (data && data.main) {
+      currentTemp.textContent = `${Math.round(data.main.temp)}°F `;
+      feelsLike.textContent = `${Math.round(data.main.feels_like)}°F`;
+      humidity.textContent = `${data.main.humidity}%`;
+      tempMax.textContent = `${Math.round(data.main.temp_max)}°F`;
+      tempMin.textContent = `${Math.round(data.main.temp_min)}°F`;
+      windSpeed.textContent = `${data.wind.speed} m/s`;
+      } else {
+        console.error('Data or data.main is missing');
+      }
+    }).catch(error => {
+      console.error('Failed to fetch weather data:', error);
+    });
   // Weather Container
   const weatherContainer = createElement('div', { className: 'weather-container' });
 
@@ -24,20 +40,39 @@ function Home() {
   const currentWeather = createElement('div', { id: 'todayWeather' });
   const currentTemp = createElement('span', { id: 'current-temp' });
   const captionDesc = createElement('span', { id: 'desc' });
+  const feelsLike = createElement('span', { id: 'feels-like'});
+  const humidity = createElement('span', { id: 'humidity'});
+  const tempMax = createElement('span', { id: 'temp-max'});
+  const tempMin = createElement('span', { id: 'temp-min'});
+  const windSpeed = createElement('span', { id: 'wind-speed'});
 
   const weatherLine = createElement('h3', { id: 'weather-line'}, [
     createElement('span', { textContent: 'The current weather is ' }),
     currentTemp,
     createElement('span', { textContent: '' }),
     captionDesc,
+    createElement('br', { textContent: '' }),
+    createElement('span', { textContent: 'Feels Like: ' }), feelsLike,
+    createElement('br', { textContent: '' }),
+    createElement('span', { textContent: 'Humidity: ' }), humidity,
+    createElement('br', { textContent: '' }),
+    createElement('span', { textContent: 'Max Temp: ' }), tempMax, 
+    createElement('br', { textContent: '' }), 
+    createElement('span', { textContent: 'Min Temp: ' }), tempMin,
+    createElement('br', { textContent: '' }),
+    createElement('span', { textContent: 'Wind Speed: ' }), windSpeed
   ]);
 
   currentWeather.appendChild(weatherLine);
+
+
   weatherContainer.appendChild(dateTime);
   weatherContainer.appendChild(currentWeather);
 
   // Timer Container
   const timerContainer = createElement('div', { className: 'timer-container' });
+
+
 
   // Create Timer Button
   const timerButton = createElement('button', {
