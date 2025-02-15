@@ -113,6 +113,7 @@ header {
   padding: 8px;
   padding-top: 16px;
   background-color: var(--paynes-gray);
+  color: white;
   border-radius: 10px;
   text-align: center;
   color: var(--platinum);
@@ -125,6 +126,7 @@ header {
 .weather-container h2 {
   margin: 0;
   padding: 0;
+  color: white;
 }
 
 #todayWeather {
@@ -132,8 +134,14 @@ header {
   justify-content: center;
   margin: 0;
   padding: 0;
+  color: white; 
 }
 
+#weather-line {
+  color: white;
+}
+
+/*timer*/
 .timer-container {
   display: flex;
   flex-direction: column;

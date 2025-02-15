@@ -24,11 +24,11 @@ function Home() {
   const currentTemp = createElement('span', { id: 'current-temp' });
   const captionDesc = createElement('span', { id: 'desc' });
 
-  const weatherLine = createElement('h3', {}, [
+  const weatherLine = createElement('h3', { id: 'weather-line'}, [
     createElement('span', { textContent: 'The current weather is ' }),
     currentTemp,
-    createElement('span', { textContent: '  ' }),
-    captionDesc
+    createElement('span', { textContent: '' }),
+    captionDesc,
   ]);
 
   currentWeather.appendChild(weatherLine);
