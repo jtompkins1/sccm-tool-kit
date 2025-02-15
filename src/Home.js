@@ -1,3 +1,4 @@
+//home.js
 import { createElement, apiFetch } from './utils';
 
 let isHome = true;

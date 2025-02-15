@@ -1,6 +1,7 @@
 import { createElement } from './utils';
 
 function Units() {
+  //converte mm to inches
   function mmToInches() {
     const mmContainer = createElement('div', { className: 'mm-container' });
     const mmInput = createElement('input', { type: 'number', placeholder: 'Enter mm', id: 'mm-input' });
@@ -25,6 +26,7 @@ function Units() {
     return mmContainer;
   }
 
+  //calculate circumference
   function getCircumference() {
     const circContainer = createElement('div', { className: 'circ-container' });
     const diameterInput = createElement('input', { type: 'number', placeholder: 'Enter diameter', id: 'diameter-input' });

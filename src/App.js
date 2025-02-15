@@ -52,7 +52,7 @@ function App() {
     }, [
       createElement('a', {href: '#/home', textContent: 'Home'}),
       createElement('a', {href: '#/page2', textContent: 'Unit Conversions'}),
-      createElement('a', {href: '#/page3', textContent: 'Page 3'})
+      createElement('a', {href: '#/page3', textContent: 'Forecast'})
     ])
   ]);
 

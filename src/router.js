@@ -2,9 +2,10 @@ import { createElement } from './utils';
 
 import Home from './Home';
 import Units from './Units';
-import Page3 from './Page3';
+import Forecast from './Forecast';
 
 import { checkAndFetchWeather } from './Home';  
+import { checkAndFetchForecast } from './Forecast';  // Add this import
 
 export function initRouter(mainView) {
   function updateView(newView) {
@@ -24,7 +25,8 @@ export function initRouter(mainView) {
         break;
 
       case '#/page3':
-        updateView(Page3());
+        updateView(Forecast());
+        checkAndFetchForecast();  // Call this when on the forecast page
         break;
 
       default:
@@ -41,5 +43,8 @@ export function initRouter(mainView) {
     const hash = newUrl.hash;
 
     hashToRoute(hash);
+    if (hash === '#/forecast') {
+      apiFetch('forecast');
+    }
   });
 }
