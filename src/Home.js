@@ -45,54 +45,103 @@ function Home() {
     id: 'createTimerButton'
   });
 
-  // Add click event listener to the button
+  // Function to recreate a single timer
+  const recreateTimer = (timer) => {
+    const timerTitle = createElement('h2', { textContent: timer.name });
+    const progressBar = createElement('div', { id: `progressBar-${timer.name}`, className: 'progress-bar' });
+    const timeLeftDisplay = createElement('span', { id: `timeLeft-${timer.name}`, className: 'time-left' });
+
+    timerContainer.appendChild(timerTitle);
+    timerContainer.appendChild(progressBar);
+    timerContainer.appendChild(timeLeftDisplay);
+
+    let timeLeft = timer.duration;
+
+    // Here we're assuming the timer should start immediately on recreation. If not, adjust this logic.
+    progressBar.style.width = '0%';
+    timeLeftDisplay.textContent = formatTime(timeLeft);
+
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      const percentComplete = ((timer.duration - timeLeft) / timer.duration) * 100;
+      progressBar.style.width = `${percentComplete}%`;
+      timeLeftDisplay.textContent = formatTime(timeLeft);
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert(`${timer.name} timer finished!`);
+      }
+    }, 1000);
+
+    // Function to format time
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+  };
+
+  // Load saved timers into a select dropdown
+  const loadSavedTimers = () => {
+    const savedTimers = JSON.parse(localStorage.getItem('timers') || '[]');
+    console.log('Saved Timers:', savedTimers); // Log all saved timers
+  
+    const selectTimer = createElement('select', { id: 'timer-selector' });
+  
+    savedTimers.forEach(timer => {
+      const option = createElement('option', { value: timer.name, textContent: `${timer.name} (${timer.duration} seconds)` });
+      selectTimer.appendChild(option);
+    });
+    
+    const selectButton = createElement('button', { textContent: 'Load Timer', className: 'select-timer-button' });
+    selectButton.addEventListener('click', () => {
+      const savedTimers = JSON.parse(localStorage.getItem('timers') || '[]'); // Re-fetch from localStorage
+      const selectedTimerName = selectTimer.value;
+      console.log('Selected Timer:', selectedTimerName); // Log the selected timer name
+      
+      const timerToRecreate = savedTimers.find(timer => timer.name === selectedTimerName);
+      console.log('Timer to Recreate:', timerToRecreate); // Log the found timer or undefined
+      
+      if (timerToRecreate) {
+        recreateTimer(timerToRecreate);
+      } else {
+        alert('Selected timer not found. Please ensure the timer name matches exactly.');
+      }
+    });
+  
+    timerContainer.appendChild(selectTimer);
+    timerContainer.appendChild(selectButton);
+  };
+
+  // Add click event listener to the button for creating new timers
   timerButton.addEventListener('click', () => {
     const timerName = prompt("Enter the name for your timer:");
     const timerDuration = parseInt(prompt("Enter the duration in seconds:"));
 
     if (!timerName || isNaN(timerDuration) || timerDuration <= 0) {
-        alert("Please enter valid inputs.");
-        return;
+      alert("Please enter valid inputs.");
+      return;
     }
 
-    // Create timer elements
-    const timerTitle = createElement('h2', { textContent: timerName });
-    const progressBar = createElement('div', { id: `progressBar-${timerName}`, className: 'progress-bar' });
-    const timeLeftDisplay = createElement('span', { id: `timeLeft-${timerName}`, className: 'time-left' });
+    // Store new timer in local storage
+    const timers = JSON.parse(localStorage.getItem('timers') || '[]');
+    timers.push({ name: timerName, duration: timerDuration });
+    localStorage.setItem('timers', JSON.stringify(timers));
+    console.log('After adding new timer:', JSON.parse(localStorage.getItem('timers')));
 
-    // Append elements to timerContainer
-    timerContainer.appendChild(timerTitle);
-    timerContainer.appendChild(progressBar);
-    timerContainer.appendChild(timeLeftDisplay);
-
-    let timeLeft = timerDuration;
-
-    // Timer logic
-    progressBar.style.width = '0%';
-    timeLeftDisplay.textContent = formatTime(timeLeft);
-
-    const timer = setInterval(() => {
-        timeLeft--;
-        const percentComplete = ((timerDuration - timeLeft) / timerDuration) * 100;
-        progressBar.style.width = `${percentComplete}%`;
-        timeLeftDisplay.textContent = formatTime(timeLeft);
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            alert(`${timerName} timer finished!`);
-        }
-    }, 1000);
-
-    //format time
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    // Optionally, update the dropdown with the new timer
+    const selectTimer = document.getElementById('timer-selector');
+    if (selectTimer) {
+      const option = createElement('option', { value: timerName, textContent: `${timerName} (${timerDuration} seconds)` });
+      selectTimer.appendChild(option);
     }
   });
 
   // Append the button to the timer container
   timerContainer.appendChild(timerButton);
+
+  // Load saved timers into a dropdown for selection
+  loadSavedTimers();
 
   // Main container with both weather and timer sections
   const container = createElement('div', {}, [

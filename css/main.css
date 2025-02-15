@@ -170,6 +170,30 @@ header {
   justify-self: center;
 }
 
+#timer-selector {
+  width: 100%;
+  height: 30px;
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
+  color: var(--black);
+  border-radius: 10px;
+  border: 2px solid var(--paynes-gray);
+  margin: 10px 0;
+  justify-self: center;
+  text-align: center;
+}
+.select-timer-button {
+  width: 100%;
+  height: 30px;
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
+  background-color: var(--platinum);
+  color: var(--black);
+  border-radius: 10px;
+  margin: 10px 0;
+  justify-self: center;
+}
+
 .progress-bar {
   width: 50%;
   height: 30px; 
@@ -183,6 +207,62 @@ header {
   margin-top: 10px;
   font-size: 1.2em;
   font-family: Verdana, sans-serif;
+}
+
+/*untis*/
+.units-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.units-container h2 {
+  color: var(--paynes-gray);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.mm-container, .circ-container {
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.units-container input[type="number"] {
+  max-width: 30%;
+  padding: 10px;
+  border: 3px solid var(--paynes-gray);
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: 50px;
+  font-size: 16px;
+}
+
+.units-container button {
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--platinum);
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  font-size: 16px;
+}
+
+
+.units-container p {
+  margin-top: 10px;
+  color: var(--paynes-gray);
 }
 
 /*forecast*/
@@ -218,6 +298,20 @@ header {
   font-style: italic;
 }
 
+#refresh-forecast {
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--platinum);
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+  font-size: 20px;
+}
+
 /*footer*/
 
 footer {
@@ -251,4 +345,35 @@ footer {
   box-sizing: border-box;
   margin-bottom: 8px;
   text-align: center;
+}
+
+/* for screens smaller than 600px */
+@media screen and (max-width: 600px) {
+  .content-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    order: 1; 
+  }
+  .sidebar-image {
+    display: none;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  main {
+    order: 2; 
+    width: 100%;
+  }
+
+  .heading {
+    order: 0; 
+  }
 }

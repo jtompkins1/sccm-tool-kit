@@ -1,5 +1,7 @@
-// forecast.js
 import { createElement, apiFetch } from './utils';
+
+// Cache for forecast data
+let forecastData = null; 
 
 function Forecast() {
   // Forecast Container
@@ -7,6 +9,12 @@ function Forecast() {
 
   // Title
   const title = createElement('h1', { id: 'forecast-title', textContent: '3-Day Forecast' });
+
+  // Refresh button for updating forecast
+  const refreshButton = createElement('button', { 
+    textContent: 'Refresh Forecast', 
+    id: 'refresh-forecast'
+  });
 
   // Forecast Days and Temperatures
   const forecastDays = [
@@ -16,28 +24,50 @@ function Forecast() {
   ];
 
   forecastDays.forEach(day => {
-    const dayElement = createElement('div', { id: day.id });
+    const dayElement = createElement('div', { id: day.id, textContent: 'Loading...' });
     const forecastElement = createElement('div', { id: day.forecastId });
     forecastContainer.appendChild(dayElement);
     forecastContainer.appendChild(forecastElement);
-    forecastContainer.appendChild(createElement('br')); // Add line break for readablitity
+    forecastContainer.appendChild(createElement('br')); 
   });
 
   // Combine all elements
   const container = createElement('div', {}, [
     title,
-    forecastContainer
+    forecastContainer,
+    refreshButton
   ]);
 
-  // Fetch forecast data when the DOM is loaded
+  //update forecast display
+  const updateForecast = (data) => {
+    if (!data) return;
+    forecastDays.forEach((day, index) => {
+      const dayEl = document.getElementById(day.id);
+      const forecastEl = document.getElementById(day.forecastId);
+      if (dayEl && forecastEl) {
+        dayEl.textContent = data.days[index].day;
+        forecastEl.textContent = data.days[index].forecast;
+      }
+    });
+  };
+
+  // Fetch forecast data when the DOM is loaded or refresh button is clicked
   document.addEventListener('DOMContentLoaded', () => {
-    apiFetch('forecast');
+    apiFetch('forecast').then(data => {
+      forecastData = data;
+      updateForecast(forecastData);
+    });
   });
 
-  // fetch forecast data when the URL changes to /page3
-  window.addEventListener('popstate', () => {
-    if (window.location.hash === '#/page3') { 
-      apiFetch('forecast');
+  // Event listener for the refresh button
+  refreshButton.addEventListener('click', async () => {
+    try {
+      const data = await apiFetch('forecast');
+      forecastData = data;
+      updateForecast(forecastData);
+    } catch (error) {
+      console.error('Error refreshing forecast:', error);
+
     }
   });
 
@@ -45,7 +75,9 @@ function Forecast() {
 }
 
 export const fetchForecast = async () => {
-  await apiFetch('forecast');
+  const response = await apiFetch('forecast');
+  forecastData = response;
+  updateForecast(forecastData);
 };
 
 export const checkAndFetchForecast = () => {

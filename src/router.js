@@ -5,7 +5,7 @@ import Units from './Units';
 import Forecast from './Forecast';
 
 import { checkAndFetchWeather } from './Home';  
-import { checkAndFetchForecast } from './Forecast';  // Add this import
+import { checkAndFetchForecast } from './Forecast';
 
 export function initRouter(mainView) {
   function updateView(newView) {
@@ -26,7 +26,7 @@ export function initRouter(mainView) {
 
       case '#/page3':
         updateView(Forecast());
-        checkAndFetchForecast();  // Call this when on the forecast page
+        checkAndFetchForecast();
         break;
 
       default:
