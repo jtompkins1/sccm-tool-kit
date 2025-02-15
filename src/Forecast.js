@@ -1,6 +1,5 @@
 import { createElement, apiFetch } from './utils';
 
-// Cache for forecast data
 let forecastData = null; 
 
 function Forecast() {
@@ -10,11 +9,6 @@ function Forecast() {
   // Title
   const title = createElement('h1', { id: 'forecast-title', textContent: '3-Day Forecast' });
 
-  // Refresh button for updating forecast
-  const refreshButton = createElement('button', { 
-    textContent: 'Refresh Forecast', 
-    id: 'refresh-forecast'
-  });
 
   // Forecast Days and Temperatures
   const forecastDays = [
@@ -24,7 +18,7 @@ function Forecast() {
   ];
 
   forecastDays.forEach(day => {
-    const dayElement = createElement('div', { id: day.id, textContent: 'Loading...' });
+    const dayElement = createElement('div', { id: day.id, textContent: '' });
     const forecastElement = createElement('div', { id: day.forecastId });
     forecastContainer.appendChild(dayElement);
     forecastContainer.appendChild(forecastElement);
@@ -34,8 +28,7 @@ function Forecast() {
   // Combine all elements
   const container = createElement('div', {}, [
     title,
-    forecastContainer,
-    refreshButton
+    forecastContainer
   ]);
 
   //update forecast display
@@ -45,31 +38,26 @@ function Forecast() {
       const dayEl = document.getElementById(day.id);
       const forecastEl = document.getElementById(day.forecastId);
       if (dayEl && forecastEl) {
-        dayEl.textContent = data.days[index].day;
-        forecastEl.textContent = data.days[index].forecast;
+        dayEl.textContent = data.days[index].day || 'No Data';
+        forecastEl.textContent = data.days[index].forecast || 'No Data';
       }
     });
   };
 
-  // Fetch forecast data when the DOM is loaded or refresh button is clicked
-  document.addEventListener('DOMContentLoaded', () => {
-    apiFetch('forecast').then(data => {
-      forecastData = data;
-      updateForecast(forecastData);
-    });
-  });
-
-  // Event listener for the refresh button
-  refreshButton.addEventListener('click', async () => {
+  //fetch forecast
+  const fetchInitialForecast = async () => {
     try {
       const data = await apiFetch('forecast');
       forecastData = data;
       updateForecast(forecastData);
     } catch (error) {
-      console.error('Error refreshing forecast:', error);
-
+      console.error('Error fetching initial forecast:', error);
+      // Optionally, handle error by showing a message or using cached data if available
     }
-  });
+  };
+
+
+  fetchInitialForecast();
 
   return container;
 }

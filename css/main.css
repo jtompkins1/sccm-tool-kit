@@ -35,7 +35,6 @@ main {
   box-sizing: border-box;
 }
 
-
 .heading {
   background: var(--black);
   color: var(--platinum);
@@ -258,7 +257,6 @@ header {
   margin: 10px;
   font-size: 16px;
 }
-
 
 .units-container p {
   margin-top: 10px;

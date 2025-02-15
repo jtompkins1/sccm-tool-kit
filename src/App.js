@@ -36,7 +36,7 @@ function updateActiveLink(currentRoute) {
 function App() {
   const main = createElement('main', {}, []);
 
-  // Add an image to the sidebar
+  //image icon for sidebar
   const sidebarImage = createElement('img', {
     src: image,
     alt: 'Tool Box Icon', 
@@ -68,7 +68,7 @@ function App() {
     updateActiveLink(newRoute);
   });
 
-  // Create a container for sidebar and main content
+  //container for sidebar and main content
   const contentContainer = createElement('div', {
     className: 'content-container'
   }, [sidebar, main]);
