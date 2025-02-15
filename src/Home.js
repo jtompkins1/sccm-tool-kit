@@ -64,15 +64,11 @@ function Home() {
   ]);
 
   currentWeather.appendChild(weatherLine);
-
-
   weatherContainer.appendChild(dateTime);
   weatherContainer.appendChild(currentWeather);
 
   // Timer Container
   const timerContainer = createElement('div', { className: 'timer-container' });
-
-
 
   // Create Timer Button
   const timerButton = createElement('button', {
@@ -80,7 +76,6 @@ function Home() {
     id: 'createTimerButton'
   });
 
-  // Function to recreate a single timer
   const recreateTimer = (timer) => {
     const timerTitle = createElement('h2', { textContent: timer.name });
     const progressBar = createElement('div', { id: `progressBar-${timer.name}`, className: 'progress-bar' });
@@ -92,7 +87,6 @@ function Home() {
 
     let timeLeft = timer.duration;
 
-    // Here we're assuming the timer should start immediately on recreation. If not, adjust this logic.
     progressBar.style.width = '0%';
     timeLeftDisplay.textContent = formatTime(timeLeft);
 
@@ -178,7 +172,8 @@ function Home() {
   // Load saved timers into a dropdown for selection
   loadSavedTimers();
 
-  // Main container with both weather and timer sections
+
+  // Main container with weather and timer and holidays sections
   const container = createElement('div', {}, [
     weatherContainer,
     timerContainer
