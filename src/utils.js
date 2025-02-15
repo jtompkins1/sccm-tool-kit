@@ -65,7 +65,7 @@ export function displayForecastResults(forecastData) {
 };
 
 
-function getDayDate(timestamp) {
+export function getDayDate(timestamp) {
   const dateObject = new Date(timestamp * 1000);
   const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
   const day = dateObject.getDate().toString().padStart(2, '0');

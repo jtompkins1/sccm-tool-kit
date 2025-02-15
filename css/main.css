@@ -93,6 +93,7 @@ header {
   width: 100%;
   position: static;
   padding: 20px; 
+  transform: scale(1.1);
 }
 
 .sidebar a.active {
@@ -120,6 +121,7 @@ header {
   box-sizing: border-box;
   margin-top: 16px;
   justify-self: center;
+  box-shadow: 1px 8px 8px rgba(0,0,0,0.5);
 }
 
 .weather-container h2 {
@@ -155,6 +157,7 @@ header {
   box-sizing: border-box;
   margin-top: 16px;
   justify-self: center;
+  box-shadow: 1px 8px 8px rgba(0,0,0,0.5);
 }
 
 #createTimerButton {
@@ -169,6 +172,12 @@ header {
   justify-self: center;
 }
 
+#createTimerButton:hover {
+  background-color: var(--black);
+  color: var(--platinum);
+  transform: scale(1.05);
+}
+
 #timer-selector {
   width: 100%;
   height: 30px;
@@ -181,6 +190,10 @@ header {
   justify-self: center;
   text-align: center;
 }
+
+#timer-selector:hover {
+  transform: scale(1.05);
+}
 .select-timer-button {
   width: 100%;
   height: 30px;
@@ -191,6 +204,11 @@ header {
   border-radius: 10px;
   margin: 10px 0;
   justify-self: center;
+}
+.select-timer-button:hover {
+  background-color: var(--black);
+  color: var(--platinum);
+  transform: scale(1.05);
 }
 
 .progress-bar {
@@ -216,8 +234,8 @@ header {
   padding: 20px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin: 20px auto;
+  box-shadow: 0 8px 8px rgba(0,0,0,0.5);
+  margin: 30px auto;
   max-width: 600px;
 }
 
@@ -244,6 +262,9 @@ header {
   font-size: 16px;
 }
 
+.units-container input[type="number"]:focus {
+  transform: scale(1.1);
+}
 .units-container button {
   padding: 10px 20px;
   background-color: var(--black);
@@ -256,6 +277,11 @@ header {
   justify-content: center;
   margin: 10px;
   font-size: 16px;
+
+}
+
+.units-container button:hover {
+  transform: scale(1.1);
 }
 
 .units-container p {
@@ -278,7 +304,11 @@ header {
   margin: 0 auto;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 1px 8px 8px rgba(0,0,0,0.5);
+}
+
+.forecast-container:hover {
+  transform: scale(1.1);
 }
 
 .forecast-container div {
@@ -299,15 +329,19 @@ header {
 #refresh-forecast {
   padding: 10px 20px;
   background-color: var(--black);
-  color: var(--platinum);
+  color: white;
   border: none;
   border-radius: 10px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px auto;
+  margin: 20px auto;
   font-size: 20px;
+}
+
+#refresh-forecast:hover {
+  transform: scale(1.1);
 }
 
 /*footer*/
@@ -320,28 +354,6 @@ footer {
   padding: 16px;
   font-family: Verdana, sans-serif;
   box-sizing: border-box;
-  text-align: center;
-}
-
-.counter-footer {
-  display: flex;
-  gap: 8px;
-}
-
-.counter-button {
-  width: 64px;
-  height: 32px;
-  font-size: 24px;
-}
-
-.counter-label {
-  display: block;
-  font-size: 32px;
-  background: #f7f7f7;
-  width: 136px;
-  padding: 4px;
-  box-sizing: border-box;
-  margin-bottom: 8px;
   text-align: center;
 }
 

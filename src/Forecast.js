@@ -1,6 +1,6 @@
-import { createElement, apiFetch } from './utils';
+import { createElement, apiFetch, getDayDate } from './utils';
 
-let forecastData = null; 
+let forecastData = null;
 
 function Forecast() {
   // Forecast Container
@@ -9,6 +9,11 @@ function Forecast() {
   // Title
   const title = createElement('h1', { id: 'forecast-title', textContent: '3-Day Forecast' });
 
+  // Refresh button for updating forecast
+  const refreshButton = createElement('button', { 
+    textContent: 'Refresh Forecast', 
+    id: 'refresh-forecast'
+  });
 
   // Forecast Days and Temperatures
   const forecastDays = [
@@ -18,7 +23,7 @@ function Forecast() {
   ];
 
   forecastDays.forEach(day => {
-    const dayElement = createElement('div', { id: day.id, textContent: '' });
+    const dayElement = createElement('div', { id: day.id, textContent: 'Refresh to load forecast' });
     const forecastElement = createElement('div', { id: day.forecastId });
     forecastContainer.appendChild(dayElement);
     forecastContainer.appendChild(forecastElement);
@@ -28,23 +33,29 @@ function Forecast() {
   // Combine all elements
   const container = createElement('div', {}, [
     title,
-    forecastContainer
+    forecastContainer, 
+    refreshButton
   ]);
 
-  //update forecast display
+  // Update forecast display
   const updateForecast = (data) => {
-    if (!data) return;
+    if (!data || !data.list) return; 
+
     forecastDays.forEach((day, index) => {
-      const dayEl = document.getElementById(day.id);
-      const forecastEl = document.getElementById(day.forecastId);
-      if (dayEl && forecastEl) {
-        dayEl.textContent = data.days[index].day || 'No Data';
-        forecastEl.textContent = data.days[index].forecast || 'No Data';
+      const forecastIndex = index * 8 + 4; 
+      const forecast = data.list[forecastIndex];
+      if (forecast) {
+        const dayEl = document.getElementById(day.id);
+        const forecastEl = document.getElementById(day.forecastId);
+        if (dayEl && forecastEl) {
+          dayEl.textContent = getDayDate(forecast.dt); // Turn the timestamp into a day
+          forecastEl.textContent = `${Math.round(forecast.main.temp)}°F`; // Set the temperature
+        }
       }
     });
   };
 
-  //fetch forecast
+  // Fetch forecast
   const fetchInitialForecast = async () => {
     try {
       const data = await apiFetch('forecast');
@@ -52,22 +63,34 @@ function Forecast() {
       updateForecast(forecastData);
     } catch (error) {
       console.error('Error fetching initial forecast:', error);
-      // Optionally, handle error by showing a message or using cached data if available
     }
   };
 
-  // Call fetchInitialForecast immediately when the component is created
-  fetchInitialForecast();
+  // Event listener for the refresh button
+  refreshButton.addEventListener('click', async () => {
+    try {
+      const data = await apiFetch('forecast');
+      forecastData = data;
+      updateForecast(forecastData);
+    } catch (error) {
+      console.error('Error refreshing forecast:', error);
+    }
+  });
 
-
+  // Fetch forecast data when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', fetchInitialForecast);
 
   return container;
 }
 
 export const fetchForecast = async () => {
-  const response = await apiFetch('forecast');
-  forecastData = response;
-  updateForecast(forecastData);
+  try {
+    const response = await apiFetch('forecast');
+    forecastData = response;
+    updateForecast(forecastData);
+  } catch (error) {
+    console.error('Error fetching forecast:', error);
+  }
 };
 
 export const checkAndFetchForecast = () => {
